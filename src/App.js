@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Counter from "./Counter.js";
+import CounterHooks from "./CounterHooks.js";
+
+export const ThemeContext = React.createContext();
+
+/*Context has two attributes.  A provider and a consumer.  A
+ */
 
 function App() {
+  const [theme, setTheme] = useState("red");
+  console.log("Render App");
+  // Functions expect you to return one  thing and nothing more!
+  // This why all the html tags are nested within eachother
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContext.Provider value={{ backgroundColor: theme }}>
+      <h1>Class Counter</h1>
+      <Counter initialCount={0} />
+      <p></p>
+      <h1>Hook Counter</h1>
+      <CounterHooks />
+      <button
+        onClick={() =>
+          setTheme((prevTheme) => {
+            return prevTheme === "red" ? "blue" : "red";
+          })
+        }
+      >Change Theme</button>
+    </ThemeContext.Provider>
   );
 }
 
